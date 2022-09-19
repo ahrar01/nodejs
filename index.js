@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const DBConnection = require("./db/db_connection")
+//const DBConnection = require("./db/db_connection")
 const userRouter = require("./routes/router");
 
-DBConnection();
+//DBConnection();
 app.use(express.json());
 
 app.use(userRouter);
