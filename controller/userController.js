@@ -1,17 +1,21 @@
+const userDetails = require("../modals/userSchema");
+
 class User {
-  getMethod = async (req, res) => {
-    const { name, age } = req.query;
-    res.send(req.query);
+  create = async (req, res) => {
+    const { name, age, address } = req.body;
+    const response = await userDetails.create({ name, age, address });
+    res.send(response);
   };
 
-  getParamsMethod = async (req, res) => {
-    const { name, age } = req.params;
-    res.send(req.params);
+  getUsers = async (req, res) => {
+    const response = await userDetails.find();
+    res.send(response);
   };
 
-  postMethod = async (req, res) => {
-    const { name, age } = req.body;
-    res.send(`hello ${name} ${age}`);
+  getUser = async (req, res) => {
+    const _id = req.query._id;
+    const response = await userDetails.findOne({ _id: _id });
+    res.send(response);
   };
 }
 
@@ -23,4 +27,6 @@ C - create
 R -Read
 U - Update
 D - Delete
+
+CALLBACK HELL
 */
