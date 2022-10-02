@@ -1,21 +1,21 @@
 const { response } = require("express");
-const userDetails = require("../modals/userSchema");
+const authorDetails = require("../modals/authorSchema");
 
-class User {
-  create = async (req, res) => {
+class Author {
+  createAuthor = async (req, res) => {
     try {
-      const { name, age, address } = req.body;
+      const { name, age } = req.body;
       if (!name) {
         throw {
           message: "Please enter a name",
         };
       }
-      if(!age){
-         throw {
-           message: "Please enter a age",
-         };
+      if (!age) {
+        throw {
+          message: "Please enter a age",
+        };
       }
-      const response = await userDetails.create({ name, age, address });
+      const response = await authorDetails.create({ name, age });
       res.send({
         status: true,
         response: response,
@@ -29,32 +29,35 @@ class User {
     }
   };
 
-  getUsers = async (req, res) => {
-    const response = await userDetails.find();
+  getAuthors = async (req, res) => {
+    const response = await authorDetails.find().populate();
     res.send(response);
   };
 
-  getUser = async (req, res) => {
+  getAuthor = async (req, res) => {
     const _id = req.query._id;
-    const response = await userDetails.findOne({ _id: _id });
+    const response = await authorDetails.findOne({ _id: _id });
     res.send(response);
   };
 
-  updateUser = async (req, res) => {
+  updateAuthor = async (req, res) => {
     const id = req.body.id;
     const name = req.body.name;
-    const response = await userDetails.updateMany({ _id: id }, { name: name });
+    const response = await authorDetails.updateMany(
+      { _id: id },
+      { name: name }
+    );
     res.send(response);
   };
 
-  deleteUser = async (req, res) => {
+  deleteAuthor = async (req, res) => {
     const id = req.body.id;
-    const response = await userDetails.deleteMany({ _id: id });
+    const response = await authorDetails.deleteMany({ _id: id });
     res.send(response);
   };
 }
 
-module.exports = new User();
+module.exports = new Author();
 
 /*
 CRUD
